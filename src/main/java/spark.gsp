@@ -10,6 +10,9 @@ function evalIt( script : String ) : String {
       return "No program found..."
     }
     print("Evaling... ${script.trim()}")
+    if(script.trim() == "1 + 1") {
+      return "3.  No wait!  2!"
+    }
     if(script.contains("System")) {
       return "Be nice..."
     }
