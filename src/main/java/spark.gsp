@@ -1,3 +1,5 @@
+uses java.lang.*
+uses java.io.*
 
 get("/", "Yep, I'm here..." )
 
@@ -5,6 +7,7 @@ get("/eval", \-> evalIt(Request.queryParams("script")) )
 
 function evalIt( script : String ) : String {
   Response.header('Access-Control-Allow-Origin', '*');
+  var originalOut = System.out
   try {
     if(script == null) {
       return "No program found..."
@@ -19,8 +22,17 @@ function evalIt( script : String ) : String {
     if(script.contains("System")) {
       return "Be nice..."
     }
-    return eval(script.trim()) as String
+
+    var tmpOut = new ByteArrayOutputStream()
+
+    System.setOut(new PrintStream(tmpOut, true))
+
+    var evalResult = eval(script.trim()) as String
+
+    return "${tmpOut} ${evalResult == null ? "" : evalResult}"
   } catch(e) {
     return "Exception: ${e.Message}"
+  } finally {
+    System.setOut(originalOut)
   }
 }
