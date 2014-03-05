@@ -6,11 +6,14 @@ get("/eval", \-> evalIt(Request.queryParams("script")) )
 function evalIt( script : String ) : String {
   Response.header('Access-Control-Allow-Origin', '*');
   try {
-    print("Evaling... ${script}")
+    if(script == null) {
+      return "No program found..."
+    }
+    print("Evaling... ${script.trim()}")
     if(script.contains("System")) {
       return "Be nice..."
     }
-    return eval(script) as String
+    return eval(script.trim()) as String
   } catch(e) {
     return "Exception: ${e.Message}"
   }
