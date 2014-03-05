@@ -4,6 +4,7 @@ get("/", "Yep, I'm here..." )
 get("/eval", \-> evalIt(Request.queryParams("script")) )
 
 function evalIt( script : String ) : String {
+  Response.header('Access-Control-Allow-Origin', '*');
   try {
     print("Evaling... ${script}")
     if(script.contains("System")) {
