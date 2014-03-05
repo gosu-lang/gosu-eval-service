@@ -25,15 +25,6 @@ class SparkGosuFile {
     return Request.params(name)
   }
 
-  function queryParam(name : String) : String {
-    var val = Request.queryParams(name)
-    if(val != null) {
-      return val
-    } else {
-      return ifNull
-    }
-  }
-
   construct(){
     // Look for a PORT environment variable
     var port = System.getenv("PORT");
